@@ -52,7 +52,7 @@ int main(int argc, const char* const argv[]) {
 		return 0;
 	} else {
 		std::cerr << "Something went wrong when sending the command: " << libusb_error_name(err) << std::endl;
+		return 1;
 	}
-	
 }
 
