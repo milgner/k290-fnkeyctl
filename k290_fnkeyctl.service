@@ -1,0 +1,11 @@
+[Unit]
+Description=Switch the K290 function keys to regular behaviour
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/k290_fnkeyctl
+RemainAfterExit=yes
+RestartPreventExitStatus=1 2
+
+[Install]
+WantedBy=multi-user.target
