@@ -23,3 +23,11 @@ Opening the device with libusb requires advanced permissions, so run it with
 
 Afterwards, you'll have regular function key behaviour. If you want to switch
 back, just append `-r` or `--reset`.
+
+To automatically run the program when the device is plugged in, you can use
+the included udev rules script as a template. Or just install the tool using
+
+    sudo ./install.sh
+
+Which will copy the executable to `/usr/local/sbin` and install the udev rules
+into `/etc/udev/rules.d`.
