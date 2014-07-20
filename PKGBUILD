@@ -1,9 +1,9 @@
 # Maintainer: Marcus Ilgner <mail@marcusilgner.com>
 pkgname=k290-fnkeyctl
 pkgver=1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Logitech K290 Fn-key configuration"
-arch=("i686", "x86_64")
+arch=('i686' 'x86_64')
 url="https://github.com/milgner/k290-fnkeyctl"
 license=('MIT')
 groups=()
