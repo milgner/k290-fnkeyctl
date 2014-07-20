@@ -1,1 +1,7 @@
+# Binary
 k290_fnkeyctl
+# Arch Package output
+*.tar.*
+pkg/
+src/
+
