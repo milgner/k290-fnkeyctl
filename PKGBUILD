@@ -11,7 +11,7 @@ depends=('libusb')
 source=(k290_fnkeyctl.cpp
         99-k290-config.rules)
 sha256sums=(7a2967f1fb89961b823e86d4ad7ad98ebc2421bcd96d02a598825c216a32630a
-					  54c7691462f8a942f49a9780fcb3f6e407762188574f847f171fe96476029aed) 
+53889796bce94b160363b27fe330cb2104bbd85ac28d028c3878747c38bf93ae)					  
 
 build() {
 	cd "$srcdir"
@@ -23,5 +23,5 @@ package() {
 	mkdir -p "$pkgdir/usr/sbin"
 	cp k290_fnkeyctl "$pkgdir/usr/sbin"
 	mkdir -p "$pkgdir/etc/udev/rules.d"
-	cp 99-k290-config.rules "$pkgdir/etc/udev/rules.d"
+	sed -e s/\\/usr\\/local\\/sbin\\//\\/usr\\/sbin\\// 99-k290-config.rules > "$pkgdir/etc/udev/rules.d/99-k290-config.rules"
 }
