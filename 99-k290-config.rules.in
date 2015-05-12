@@ -1,0 +1,1 @@
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c31f", RUN+="@CMAKE_INSTALL_FULL_SBINDIR@/k290_fnkeyctl"
