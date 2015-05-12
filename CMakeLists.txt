@@ -1,5 +1,5 @@
 project(k290-fnkeyctl)
-cmake_minimum_required(VERSION 2.8.5)
+cmake_minimum_required(VERSION 2.8.12)
 
 option(INSTALL_UDEV_RULE "Whether to install the udev rule" ON)
 option(INSTALL_TO_SYSTEM_UDEV_DIR "Whether to install the udev rule to /usr/lib/udev/rules.d instead of /etc/udev/rules.d" OFF)
