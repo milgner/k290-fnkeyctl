@@ -42,3 +42,7 @@ Now you'll just need to tell udev to apply the new rules:
 
     sudo udevadm control --reload-rules
     sudo udevadm trigger --subsystem-match=input
+
+### Fedora installation
+
+Go to https://copr.fedoraproject.org/coprs/mariuszs/k290-fnkeyctl/
