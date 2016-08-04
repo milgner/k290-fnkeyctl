@@ -49,7 +49,7 @@ Go to https://copr.fedoraproject.org/coprs/mariuszs/k290-fnkeyctl/
 
 ### Debian 8 Jessie installation
 
-Debian 8 is a little different from Ubuntu derivatives like Linux mint. You might get C++ function reference errors and this might be because **pkg-config** is not available by default so it just fails without warning. To get arround this run 
+Debian 8 is a little different from Ubuntu derivatives like Linux mint. You might get C++ function reference errors and this might be because **pkg-config** might not available by default so it just fails without warning. To get arround this run 
       
       `sudo dpkg --search pkg-config`
 
