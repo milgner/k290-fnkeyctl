@@ -1,15 +1,20 @@
 #!/bin/sh
 
-[ -f ./k290_fnkeyctl ] || ./build.sh || (echo "Could not build" && exit)
+INSTALL_UDEV_RULE="OFF"
+INSTALL_SYSTEMD_SLEEP_SCRIPT="OFF"
+INSTALL_PM_UTILS_SLEEP_SCRIPT="OFF"
 
-install -m 755 -o root k290_fnkeyctl /usr/local/sbin/
 if [ -d /etc/udev/rules.d ]; then
-  install -m 644 -o root 99-k290-config.rules /etc/udev/rules.d/
+  INSTALL_UDEV_RULE="ON"
 fi
 if [ -d /usr/lib/systemd/system-sleep/ ]; then
-  install -m 755 -o root k290-fnkeyctl.sh /usr/lib/systemd/system-sleep/
+  INSTALL_SYSTEMD_SLEEP_SCRIPT="ON"
 fi
 if [ -d /etc/pm/sleep.d ]; then
-  install -m 755 -o root 20-k290.sh /etc/pm/sleep.d/
+  INSTALL_PM_UTILS_SLEEP_SCRIPT="ON"
 fi
-
+[ -f ./k290_fnkeyctl ] || ./build.sh -DINSTALL_UDEV_RULE=$INSTALL_UDEV_RULE \
+  -DINSTALL_SYSTEMD_SLEEP_SCRIPT=$INSTALL_SYSTEMD_SLEEP_SCRIPT \
+  -DINSTALL_PM_UTILS_SLEEP_SCRIPT=$INSTALL_PM_UTILS_SLEEP_SCRIPT \
+  || (echo "Could not build" && exit)
+make install

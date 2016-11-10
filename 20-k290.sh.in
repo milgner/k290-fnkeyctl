@@ -2,7 +2,7 @@
 
 case "$1" in
     thaw|resume)
-        /usr/local/sbin/k290_fnkeyctl > /dev/null
+        @CMAKE_INSTALL_FULL_SBINDIR@/k290_fnkeyctl > /dev/null
         ;;
     *) exit $NA
         ;;

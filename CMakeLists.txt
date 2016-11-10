@@ -1,0 +1,43 @@
+project(k290-fnkeyctl)
+cmake_minimum_required(VERSION 2.8.12)
+
+option(INSTALL_UDEV_RULE "Whether to install the udev rule" ON)
+option(INSTALL_TO_SYSTEM_UDEV_DIR "Whether to install the udev rule to /usr/lib/udev/rules.d instead of /etc/udev/rules.d" OFF)
+option(INSTALL_SYSTEMD_SLEEP_SCRIPT "Whether to install the systemd-sleep script" ON)
+option(INSTALL_PM_UTILS_SLEEP_SCRIPT "Whether to install the pm-utils sleep script" ON)
+
+include(GNUInstallDirs)
+include(FindPkgConfig)
+pkg_search_module(LIBUSB REQUIRED libusb-1.0)
+
+add_executable(k290_fnkeyctl k290_fnkeyctl.cpp)
+target_compile_options(k290_fnkeyctl PRIVATE -std=gnu++0x ${LIBUSB_CFLAGS})
+target_link_libraries(k290_fnkeyctl PRIVATE ${LIBUSB_LIBRARIES})
+target_include_directories(k290_fnkeyctl PRIVATE ${LIBUSB_INCLUDE_DIRS})
+
+install(TARGETS k290_fnkeyctl DESTINATION ${CMAKE_INSTALL_SBINDIR})
+
+if(INSTALL_UDEV_RULE)
+  configure_file(99-k290-config.rules.in ${CMAKE_CURRENT_BINARY_DIR}/99-k290-config.rules @ONLY)
+  if(INSTALL_TO_SYSTEM_UDEV_DIR)
+    set(UDEV_RULES_DIR /usr/lib/udev/rules.d)
+  else()
+    set(UDEV_RULES_DIR /etc/udev/rules.d)
+  endif()
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/99-k290-config.rules DESTINATION ${UDEV_RULES_DIR})
+endif()
+if(INSTALL_SYSTEMD_SLEEP_SCRIPT)
+  configure_file(k290-fnkeyctl.sh.in ${CMAKE_CURRENT_BINARY_DIR}/k290-fnkeyctl.sh @ONLY)
+  if(IS_DIRECTORY /usr/lib/systemd/system-sleep/)
+    install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/k290-fnkeyctl.sh DESTINATION /usr/lib/systemd/system-sleep/)
+  endif()
+  # some distributions (e.g. Ubuntu) patch systemd to use /lib/systemd/system-sleep/ instead
+  if(IS_DIRECTORY /lib/systemd/system-sleep/)
+    install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/k290-fnkeyctl.sh DESTINATION /lib/systemd/system-sleep/)
+  endif()
+endif()
+
+if(INSTALL_PM_UTILS_SLEEP_SCRIPT)
+  configure_file(20-k290.sh.in ${CMAKE_CURRENT_BINARY_DIR}/20-k290.sh @ONLY)
+  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/20-k290.sh DESTINATION /etc/pm/sleep.d/)
+endif()
